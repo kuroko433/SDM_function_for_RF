@@ -1,16 +1,25 @@
-library(terra)
-library(sp)
-library(sf)
-library(dplyr)
-library(ranger)
-library(tuneRanger)
-library(caret)
-library(pROC)
-library(pdp)
-library(tidyr)
-library(dismo)
-library(usdm)
-library(blockCV)
+paquetes <- c("terra", "sp", "sf", "dplyr", "ranger", "tuneRanger", 
+              "caret", "pROC", "pdp", "tidyr", "dismo", "usdm", "blockCV")
+
+# Función para instalar y cargar automáticamente
+instalar_y_cargar <- function(paq) {
+  if (!require(paq, character.only = TRUE)) {
+    message("Instalando paquete: ", paq, "...")
+    install.packages(paq, dependencies = TRUE, repos = "https://cran.rstudio.com/")
+    library(paq, character.only = TRUE)
+  } else {
+    message("✓ ", paq, " ya está instalado")
+  }
+}
+
+cat("=== Verificando e instalando paquetes necesarios ===\n\n")
+sapply(paquetes, instalar_y_cargar)
+
+cat("\n¡Todos los paquetes están listos!\n")
+
+
+rm(paquetes)
+rm(instalar_y_cargar)
 #### Función para cargar y combinar archivos TIF ######
 combine_tif_files <- function(folder_path) {
   # Obtener la lista de archivos TIF en la carpeta
