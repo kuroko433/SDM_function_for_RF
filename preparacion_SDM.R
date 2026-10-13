@@ -479,7 +479,7 @@ SDM_spatial_pred<-function(RF_list, occurrences, spat_rast, pol){
   
   ##### first cut with the polygon #######
   poly_rast <- terra::crop(spat_rast, pol)
-  poly_rast <- terra::mask(spat_rast, pol)
+  poly_rast <- terra::mask(poly_rast, pol)
   
   #### mess and mess mask ######
   mess_map <- dismo::mess(x = raster::stack(poly_rast), v = occurrences[,-c(1:4)], full = FALSE)
@@ -518,7 +518,7 @@ SDM_spatial_pred<-function(RF_list, occurrences, spat_rast, pol){
   
   set.seed(666)
   
-  for(i in 1:4){
+  for(i in seq_along(RF_list$models)){
     model_predictions<-predict(RF_list$models[[i]],df_1[,-c(1,2)])$predictions[, 2]
     preds_1[,i]<-model_predictions
   }
@@ -541,7 +541,7 @@ SDM_spatial_pred<-function(RF_list, occurrences, spat_rast, pol){
   
   set.seed(666)
   
-  for(i in 1:4){
+  for(i in seq_along(RF_list$models)){
     model_predictions<-predict(RF_list$models[[i]],df_2[,-c(1,2)])$predictions[, 2]
     preds_2[,i]<-model_predictions
   }
